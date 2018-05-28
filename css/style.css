@@ -1,0 +1,72 @@
+body {
+    background-image:url('https://media.giphy.com/media/5ngSvQJfczFQmacXqv/giphy.gif');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    margin: 0;
+}
+.flex-container {
+    height: 100%;-
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    text-align: center;
+}
+
+.flex-container > * {
+    padding: 12px;
+    -webkit-flex: 1 100%;
+    flex: 1 100%;
+}
+
+.article {
+    text-align: left;
+    background: rgba(50, 50, 50,.5);
+
+}
+
+header {
+    background-image:url('http://winterott.de/wp-content/uploads/2017/07/banner_hunde3-1.jpg');
+    color: firebrick
+    }
+footer {
+    flex-shrink: 0;
+    background: #aaa;color:white;
+}
+.nav {
+    width: 1px;
+    background:#eee;
+}
+
+.nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+.nav ul a {
+    text-decoration: none;
+}
+
+@media all and (min-width: 768px) {
+    .nav {text-align:left;-webkit-flex: 1 auto;flex:1 auto;-webkit-order:1;order:1;}
+    .article {-webkit-flex:5 0px;flex:5 0px;-webkit-order:2;order:2;}
+    footer {-webkit-order:3;order:3;}
+}
+
+h1 {
+    color: ghostwhite;
+    font-family: 'Allerta Stencil';
+    font-size: 300%;
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+}
+h2{
+    color: snow;
+    font-family: "Courier New";
+    font-size: 30px;
+}
+p1{
+    color: snow;
+    font-size: 18px;
+    font-family: 'Roboto Mono';
+}
