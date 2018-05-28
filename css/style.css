@@ -45,6 +45,7 @@ footer {
     padding: 0;
 }
 .nav ul a {
+    display: block;
     text-decoration: none;
 }
 
