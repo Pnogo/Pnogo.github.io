@@ -113,7 +113,6 @@ input[type=text], input[type=password] {
 }
 
 button {
-    background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -124,6 +123,14 @@ button {
 
 button:hover {
     opacity: 0.8;
+}
+
+.fortinetbtn {
+    background-color: #dc291e;
+}
+
+.loginbtn {
+    background-color: #4CAF50;
 }
 
 .cancelbtn {
