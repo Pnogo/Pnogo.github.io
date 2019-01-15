@@ -71,3 +71,14 @@ p1{
     font-size: 18px;
     font-family: 'Roboto Mono';
 }
+p2{
+    color:#b30000;
+    font-size: 50px;
+    text-shadow:2px 2px 0 #000;
+}
+p3{
+    color: pink;
+    font-family: 'Asset';
+    font-size: 18px
+    text-shadow: 1px 1px 0 #000;
+}
