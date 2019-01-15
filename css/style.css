@@ -281,11 +281,13 @@ span.psw {
     to {transform: scale(1)}
 }
 table{
-    font-family: 'Roboto Mono';
+    font-family: 'Roboto Mono', serif;
     font-size: 20px;
     color: snow;
     table-layout: fixed;
     width: 500px;
 }
 th, td {
+    font-family: 'Roboto Mono';
+    font-size: 20px;
 }
