@@ -302,6 +302,7 @@ th, td {
     align-content: left;
     align-items: left;
     width: 100%;
+    background:#eee
 }
 
 .dropdown {
@@ -329,7 +330,7 @@ th, td {
     text-align: center;
     font-family: 'Montserrat';
     text-align: left;
-    
+
 }
 
 .dropdown-content a:hover {
