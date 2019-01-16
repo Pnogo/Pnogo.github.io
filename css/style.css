@@ -48,6 +48,7 @@ header {
 footer {
     flex-shrink: 0;
     background: #aaa;color:white;
+    font-family: 'Montserrat'
 }
 .nav {
     width: 1px;
