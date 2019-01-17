@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>C A T  G R I P S</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/Pnogo/Pnogo.github.io/master/img/mc-ride-png-fixed.png">
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content="pnogo.inc">
+    <meta name="description" content="pnogo">
+    <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Allerta Stencil' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Asset' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+
+</head>
+<body style="background-image:url('https://github.com/Pnogo/Pnogo.github.io/blob/master/img/Catto_grips.gif?raw=true');">
+<div class="flex-container">
+        <iframe src="silence.mp3" allow="autoplay" style="display:none" id="iframeAudio">
+        </iframe>
+        <audio id="deathGripsPlayer" autoplay loop>
+            <source src="no_love.ogg" type="audio/mpeg">
+        </audio>
+</div>
+</body>
+<!-- LOGIN -->
+
+<div id="id01" class="modal">
+  <span onclick="document.getElementById('id01').style.display='none'"
+        class="close" title="Close Modal">&times;</span>
+
+    <h2>Login Form</h2>
+
+    <form class="modal-content animate" action="/action_page.php">
+        <div class="imgcontainer">
+            <img src="pongo.png" alt="Avatar" class="avatar" height="450">
+        </div>
+
+        <div class="container">
+            <label for="uname"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="uname" required>
+
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required>
+
+            <button type="submit" class="loginbtn">Login</button>
+            <button type="button" class="fortinetbtn" onclick="fortiLogin()">Login with FortiNet®</button>
+            <label>
+                <input type="checkbox" checked="checked" name="remember"> Remember me
+            </label>
+        </div>
+
+        <div class="container" style="background-color:#f1f1f1">
+            <button onclick="document.getElementById('id01').style.display='none'" type="button" class="cancelbtn">Cancel</button>
+            <span class="psw">Forgot <a href="https://youtu.be/-_MJ9Td7wSU">password?</a></span>
+        </div>
+    </form>
+
+</div>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('id01');
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
+
+    function fortiLogin() {
+        let newWindow = window.open("http://fortinet-zuccante.ml/","fortinet_login",'height=450,width=530');
+        if (window.focus) {newWindow.focus()}
+        return false;
+    }
+</script>
+
+</html>
