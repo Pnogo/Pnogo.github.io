@@ -42,7 +42,7 @@ li a:hover:not(.active) {
 }
 
 header {
-    background-image:url('http://winterott.de/wp-content/uploads/2017/07/banner_hunde3-1.jpg');
+    background-image:url('../img/banner_hunde3-1.jpg');
     color: firebrick
     }
 footer {
