@@ -1,2 +1,2 @@
 # PNOGO'S WEBSITE
-##### https://pnogo.github.io/
+##### https://pnogo.ml/
