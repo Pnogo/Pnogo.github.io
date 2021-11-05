@@ -34756,7 +34756,7 @@ return s.ak(new L.Z2(s,a))},
 $S:145}
 L.Z2.prototype={
 $0:function(){var s,r=null,q=this.a
-q.cx="https://api.pnogo.ml/getpnogo?id="+H.b(this.b.a)+"&key=Mm8e8bu0IECbMw2vVqQ9"
+q.cx="https://api.pnogo.dev/getpnogo?id="+H.b(this.b.a)+"&key=Mm8e8bu0IECbMw2vVqQ9"
 s=t.w
 q.c.X(s).f.a.a
 q.c.X(s).f.a.b
@@ -57314,8 +57314,8 @@ r($,"asY","cs",function(){return H.i5(H.abW(H.c([1],t.t)).buffer,0,null).getInt8
 r($,"avg","KP",function(){return new P.Mm(P.u(t.N,H.W("lW")))})
 r($,"avt","a5N",function(){return new P.TB(P.u(t.N,H.W("ag(i)")),P.u(t.S,t.h))})
 r($,"aus","agq",function(){return new P.t()})
-q($,"atL","ag1",function(){return P.jO("https://api.pnogo.ml/dailypnogo?key=Mm8e8bu0IECbMw2vVqQ9",0,null)})
-q($,"atM","ag2",function(){return P.jO("https://api.pnogo.ml/randompnogo?key=Mm8e8bu0IECbMw2vVqQ9",0,null)})
+q($,"atL","ag1",function(){return P.jO("https://api.pnogo.dev/dailypnogo?key=Mm8e8bu0IECbMw2vVqQ9",0,null)})
+q($,"atM","ag2",function(){return P.jO("https://api.pnogo.dev/randompnogo?key=Mm8e8bu0IECbMw2vVqQ9",0,null)})
 r($,"av8","a9i",function(){return P.ab7(t.S)})
 r($,"auD","agw",function(){return new M.Xp(1,500,2*P.as7(500))})
 r($,"auG","agz",function(){return R.ux(C.tq,C.i,t.o)})

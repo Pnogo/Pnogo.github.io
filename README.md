@@ -1,2 +1,2 @@
 # PNOGO'S WEBSITE
-##### https://pnogo.ml/
+##### https://pnogo.dev/
