@@ -18030,7 +18030,7 @@ a8T:function a8T(){},
 a8U:function(){var s=0,r=P.V(t.Wg),q,p
 var $async$a8U=P.M(function(a,b){if(a===1)return P.S(b,r)
 while(true)switch(s){case 0:s=3
-return P.P(G.awg(P.mw("https://test.pnogo.dev/getallpnoghi?key=123")),$async$a8U)
+return P.P(G.awg(P.mw("https://test.pnogo.dev/getall?key=123")),$async$a8U)
 case 3:p=b
 if(p.b===200){q=J.aeF(J.z9(C.aL.cM(0,B.aw7(U.atZ(p.e).c.a.j(0,"charset")).cM(0,p.x)),new N.a8V(),t.kV))
 s=1
