@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Che Criceto Sei?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .quiz-content {
+            padding: 30px;
+        }
+
+        .question {
+            margin-bottom: 30px;
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .question.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .answers {
+            display: grid;
+            gap: 15px;
+        }
+
+        .answer {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+        }
+
+        .answer:hover {
+            background: #e3f2fd;
+            border-color: #2196f3;
+            transform: translateY(-2px);
+        }
+
+        .answer.selected {
+            background: #4caf50;
+            color: white;
+            border-color: #4caf50;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .progress {
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(45deg, #4caf50, #8bc34a);
+            transition: width 0.3s ease;
+            border-radius: 5px;
+        }
+
+        .result {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .result.show {
+            display: block;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        .hamster-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 20px auto;
+            background-size: cover;
+            background-position: center;
+            border: 5px solid #ff6b6b;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .result h2 {
+            color: #ff6b6b;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .result p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .restart-btn {
+            background: #ff6b6b;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+        }
+
+        .share-section {
+            margin: 30px 0;
+        }
+
+        .share-btn {
+            background: #4caf50;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .share-btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .share-link-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .share-link-container input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 20px;
+            font-size: 0.9em;
+            background: #f8f9fa;
+        }
+
+        .copy-btn {
+            background: #2196f3;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .copy-btn:hover {
+            background: #1976d2;
+        }
+
+        .copy-btn.copied {
+            background: #4caf50;
+        }
+
+        .hamster-golden { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="%23DAA520"/><circle cx="80" cy="80" r="8" fill="black"/><circle cx="120" cy="80" r="8" fill="black"/><ellipse cx="100" cy="110" rx="15" ry="10" fill="%23CD853F"/><circle cx="60" cy="60" r="25" fill="%23DAA520"/><circle cx="140" cy="60" r="25" fill="%23DAA520"/></svg>'); }
+        .hamster-white { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="white"/><circle cx="80" cy="80" r="8" fill="black"/><circle cx="120" cy="80" r="8" fill="black"/><ellipse cx="100" cy="110" rx="15" ry="10" fill="pink"/><circle cx="60" cy="60" r="25" fill="white"/><circle cx="140" cy="60" r="25" fill="white"/></svg>'); }
+        .hamster-brown { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="%23A0522D"/><circle cx="80" cy="80" r="8" fill="black"/><circle cx="120" cy="80" r="8" fill="black"/><ellipse cx="100" cy="110" rx="15" ry="10" fill="%23654321"/><circle cx="60" cy="60" r="25" fill="%23A0522D"/><circle cx="140" cy="60" r="25" fill="%23A0522D"/></svg>'); }
+        .hamster-gray { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="%23808080"/><circle cx="80" cy="80" r="8" fill="black"/><circle cx="120" cy="80" r="8" fill="black"/><ellipse cx="100" cy="110" rx="15" ry="10" fill="%23696969"/><circle cx="60" cy="60" r="25" fill="%23808080"/><circle cx="140" cy="60" r="25" fill="%23808080"/></svg>'); }
+        .hamster-panda { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="white"/><circle cx="80" cy="80" r="8" fill="black"/><circle cx="120" cy="80" r="8" fill="black"/><ellipse cx="100" cy="110" rx="15" ry="10" fill="pink"/><circle cx="60" cy="50" r="30" fill="black"/><circle cx="140" cy="50" r="30" fill="black"/><circle cx="60" cy="60" r="20" fill="white"/><circle cx="140" cy="60" r="20" fill="white"/></svg>'); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🐹 Che Criceto Sei? 🐹</h1>
+            <p>Rispondi alle domande per scoprire quale criceto rappresenta la tua personalità!</p>
+        </div>
+
+        <div class="quiz-content">
+            <div class="progress">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <div class="question active" data-question="0">
+                <h3>1. Quanto ami le coccole da 1 a 10?</h3>
+                <div class="answers">
+                    <div class="answer" data-answer="d">😤 1-2 Non mi toccare!!!</div>
+                    <div class="answer" data-answer="c">🤗 3-4 Non vado oltre gli abbracci</div>
+                    <div class="answer" data-answer="b">🤷 5-6 Dipende da come mi sono svegliato quel giorno</div>
+                    <div class="answer" data-answer="c">😊 7-8 Sono timido all'inizio, ma poi mi sblocco</div>
+                    <div class="answer" data-answer="a">💕 9-10 Amo tutti!</div>
+                </div>
+            </div>
+
+            <div class="question" data-question="1">
+                <h3>2. Cosa preferisci fare nel tempo libero?</h3>
+                <div class="answers">
+                    <div class="answer" data-answer="a">🏃 Correre ovunque!</div>
+                    <div class="answer" data-answer="b">🍿 Fare uno spuntino</div>
+                    <div class="answer" data-answer="d">🛏️ Nascondermi sotto le coperte</div>
+                    <div class="answer" data-answer="a">👥 Stare con gli amici</div>
+                </div>
+            </div>
+
+            <div class="question" data-question="2">
+                <h3>3. Scegli uno snack:</h3>
+                <div class="answers">
+                    <div class="answer" data-answer="a">🌻 Semi di girasole</div>
+                    <div class="answer" data-answer="b">🥜 Frutta secca</div>
+                    <div class="answer" data-answer="c">🥕 Carotine</div>
+                    <div class="answer" data-answer="b">🍪 Biscottini</div>
+                </div>
+            </div>
+
+            <div class="question" data-question="3">
+                <h3>4. Quale tipologia di libri ti piace leggere?</h3>
+                <div class="answers">
+                    <div class="answer" data-answer="d">🧠 Leggo generi che per alcuni sono difficili da comprendere</div>
+                    <div class="answer" data-answer="a">🐉 Fantasy, draghi e maghi sono la mia passione!</div>
+                    <div class="answer" data-answer="a">📚 Fumetti, mi va bene tutto, basta che sia scritto in Comic Sans</div>
+                    <div class="answer" data-answer="b">🍳 Il ricettario può andare? Non leggo molto</div>
+                    <div class="answer" data-answer="c">💖 Romanzi rosa, sono un romanticone</div>
+                </div>
+            </div>
+
+            <div class="question" data-question="4">
+                <h3>5. Quanto sei geloso delle tue cose?</h3>
+                <div class="answers">
+                    <div class="answer" data-answer="d">🔧 Sono geloso solo di quello che ho costruito io</div>
+                    <div class="answer" data-answer="b">🤝 Riesco a condividere, solo se ricevo qualcosa in cambio</div>
+                    <div class="answer" data-answer="c">🏠 Mi casa es tu casa</div>
+                    <div class="answer" data-answer="b">👀 Sono le mie cose, puoi guardare ma non toccare!</div>
+                    <div class="answer" data-answer="b">💰 Il mio tessoro!!!</div>
+                </div>
+            </div>
+
+            <div class="question" data-question="5">
+                <h3>6. Ami le novità?</h3>
+                <div class="answers">
+                    <div class="answer" data-answer="d">😰 Tutto ciò che è fuori dalla routine meglio evitare</div>
+                    <div class="answer" data-answer="c">🤔 Cose nuove? Mmh, controlliamo con cautela</div>
+                    <div class="answer" data-answer="c">🤷 Ma quello è sempre stato così? Boh</div>
+                    <div class="answer" data-answer="b">🍕 Un qualcosa di nuovo? Sicuramente è cibo!</div>
+                    <div class="answer" data-answer="a">🤩 Cos'è?!! Cos'è?! Fammi subito vedere!!!</div>
+                </div>
+            </div>
+
+            <div class="question" data-question="6">
+                <h3>7. Qual è il tuo habitat ideale?</h3>
+                <div class="answers">
+                    <div class="answer" data-answer="a">🌀 Un labirinto pieno di cunicoli</div>
+                    <div class="answer" data-answer="a">🎡 Una ruota gigante</div>
+                    <div class="answer" data-answer="c">🏡 Una casetta accogliente</div>
+                    <div class="answer" data-answer="a">🎪 Un parco giochi con altri criceti</div>
+                </div>
+            </div>
+
+            <div class="question" data-question="7">
+                <h3>8. Come ti svegli al mattino?</h3>
+                <div class="answers">
+                    <div class="answer" data-answer="a">⚡ Scatto come una molla</div>
+                    <div class="answer" data-answer="d">🐌 Con calma… mooolta calma</div>
+                    <div class="answer" data-answer="d">⏰ Dopo il terzo allarme</div>
+                    <div class="answer" data-answer="c">💭 Dipende dal sogno</div>
+                </div>
+            </div>
+
+            <div class="question" data-question="8">
+                <h3>9. Quanto fai attività fisica?</h3>
+                <div class="answers">
+                    <div class="answer" data-answer="a">🏃 Sono molto costante e mi piace correre per mangiare tanto dopo</div>
+                    <div class="answer" data-answer="a">🌳 Ne faccio molta soprattutto all'aria aperta</div>
+                    <div class="answer" data-answer="a">🌅 Appena mi sveglio, corro a fare ginnastica!</div>
+                    <div class="answer" data-answer="d">❓ Attività fisica? Di cosa parli?</div>
+                    <div class="answer" data-answer="d">🛋️ La faccio quando mi ricordo, ma se tocco il divano non mi alzo!</div>
+                </div>
+            </div>
+
+            <div class="question" data-question="9">
+                <h3>10. Quali sono i tuoi hobby?</h3>
+                <div class="answers">
+                    <div class="answer" data-answer="d">😴 Dormire conta?</div>
+                    <div class="answer" data-answer="c">🔨 Il fai-da-te</div>
+                    <div class="answer" data-answer="a">⚽ Sport, normali o estremi</div>
+                    <div class="answer" data-answer="c">📖 Leggere</div>
+                    <div class="answer" data-answer="b">🛍️ Shopping</div>
+                </div>
+            </div>
+
+            <div class="question" data-question="10">
+                <h3>11. Come reagisci quando ti sorprende qualcosa?</h3>
+                <div class="answers">
+                    <div class="answer" data-answer="d">🧊 Mi immobilizzo</div>
+                    <div class="answer" data-answer="a">💨 Scappo!</div>
+                    <div class="answer" data-answer="d">🙈 Mi nascondo sotto qualcosa</div>
+                    <div class="answer" data-answer="c">👀 Mi guardo intorno incuriosito</div>
+                </div>
+            </div>
+
+            <div class="question" data-question="11">
+                <h3>12. In gruppo, che ruolo hai?</h3>
+                <div class="answers">
+                    <div class="answer" data-answer="a">👑 Il leader</div>
+                    <div class="answer" data-answer="c">🤗 Il coccolone</div>
+                    <div class="answer" data-answer="d">🤫 Il silenzioso</div>
+                    <div class="answer" data-answer="a">🎭 L'intrattenitore</div>
+                </div>
+            </div>
+
+            <div class="question" data-question="12">
+                <h3>13. Quando esco di casa vado:</h3>
+                <div class="answers">
+                    <div class="answer" data-answer="d">🏠 Uscire di casa? Giammai!</div>
+                    <div class="answer" data-answer="c">📚 In biblioteca/libreria, amo leggere!</div>
+                    <div class="answer" data-answer="b">🍕 Dipende dai giorni, magari se ho fame esco per addentare qualcosa</div>
+                    <div class="answer" data-answer="a">🗺️ Fatemi strada che non so dove andare!</div>
+                    <div class="answer" data-answer="a">🌍 Casa? Quando esco non rientrerei mai!</div>
+                </div>
+            </div>
+
+            <div class="question" data-question="13">
+                <h3>14. Che tipo di musica ti rappresenta di più?</h3>
+                <div class="answers">
+                    <div class="answer" data-answer="a">🎸 Rock</div>
+                    <div class="answer" data-answer="a">🎵 Pop</div>
+                    <div class="answer" data-answer="d">🎧 Lo-fi chill</div>
+                    <div class="answer" data-answer="c">🎉 Musica allegra e divertente</div>
+                </div>
+            </div>
+
+            <div class="question" data-question="14">
+                <h3>15. Quale di queste frasi ti descrive meglio?</h3>
+                <div class="answers">
+                    <div class="answer" data-answer="a">🗺️ "Sempre all'avventura!"</div>
+                    <div class="answer" data-answer="b">🍽️ "Dove si mangia?"</div>
+                    <div class="answer" data-answer="d">☮️ "La tranquillità è tutto"</div>
+                    <div class="answer" data-answer="c">💕 "La vita è più bella se condivisa"</div>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" style="display: none;">Indietro</button>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">Avanti</button>
+            </div>
+        </div>
+
+        <div class="result" id="result">
+            <div class="hamster-image" id="hamsterImage"></div>
+            <h2 id="hamsterType"></h2>
+            <p id="hamsterDescription"></p>
+            <div class="share-section">
+                <button class="share-btn" onclick="shareResult()">📤 Condividi il tuo risultato</button>
+                <div class="share-link-container" id="shareLinkContainer" style="display: none;">
+                    <input type="text" id="shareLink" readonly>
+                    <button class="copy-btn" onclick="copyLink()">📋 Copia</button>
+                </div>
+            </div>
+            <button class="restart-btn" onclick="restartQuiz()">Rifai il Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 0;
+        let answers = {};
+        const totalQuestions = 15;
+
+        const hamsterTypes = {
+            'golden': {
+                name: 'Criceto Dorato Avventuroso',
+                description: 'Sei pieno di energia e sempre pronto per una nuova avventura! Come il criceto dorato, ami esplorare, correre e scoprire cose nuove. Sei socievole, curioso e la tua vitalità contagia tutti. Non riesci a stare fermo e cerchi sempre stimoli nuovi!',
+                class: 'hamster-golden'
+            },
+            'white': {
+                name: 'Criceto Bianco Goloso',
+                description: 'Sei un vero buongustaio e ami condividere i piaceri della vita! Come il criceto bianco, il cibo è una delle tue passioni principali, ma non solo per mangiare - ti piace cucinare, provare sapori nuovi e rendere felici gli altri attraverso il cibo. Sei generoso e caloroso!',
+                class: 'hamster-white'
+            },
+            'brown': {
+                name: 'Criceto Marrone Coccolone',
+                description: 'Sei dolce, affettuoso e ami le relazioni sincere! Come il criceto marrone, apprezzi la compagnia delle persone care, ti piacciono le coccole e creare un ambiente accogliente intorno a te. Sei romantico, empatico e metti sempre il cuore in quello che fai.',
+                class: 'hamster-brown'
+            },
+            'gray': {
+                name: 'Criceto Grigio Tranquillo',
+                description: 'Sei una persona pacifica che ama la tranquillità e i ritmi lenti! Come il criceto grigio, preferisci la calma al caos, ti piace riflettere e goderti i piccoli piaceri della vita. Sei introspettivo, rilassato e trovi bellezza nella semplicità.',
+                class: 'hamster-gray'
+            },
+            'panda': {
+                name: 'Criceto Panda Intellettuale',
+                description: 'Sei una mente brillante che ama la conoscenza e i ragionamenti complessi! Come il raro criceto panda, hai gusti raffinati, leggi molto e ti piacciono le cose che stimolano l\'intelletto. Sei riflessivo, colto e affascinante nella tua unicità.',
+                class: 'hamster-panda'
+            }
+        };
+
+        function selectAnswer(element, answer) {
+            const questionDiv = element.closest('.question');
+            const allAnswers = questionDiv.querySelectorAll('.answer');
+            
+            allAnswers.forEach(ans => ans.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            answers[currentQuestion] = answer;
+            
+            setTimeout(() => {
+                if (currentQuestion < totalQuestions - 1) {
+                    nextQuestion();
+                } else {
+                    showResult();
+                }
+            }, 300);
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions - 1) {
+                document.querySelector(`[data-question="${currentQuestion}"]`).classList.remove('active');
+                currentQuestion++;
+                document.querySelector(`[data-question="${currentQuestion}"]`).classList.add('active');
+                updateProgress();
+                updateButtons();
+            } else {
+                showResult();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                document.querySelector(`[data-question="${currentQuestion}"]`).classList.remove('active');
+                currentQuestion--;
+                document.querySelector(`[data-question="${currentQuestion}"]`).classList.add('active');
+                updateProgress();
+                updateButtons();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / totalQuestions) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.style.display = currentQuestion > 0 ? 'block' : 'none';
+            nextBtn.textContent = currentQuestion === totalQuestions - 1 ? 'Vedi Risultato' : 'Avanti';
+        }
+
+        function showResult() {
+            // Calcola il risultato basato sulle risposte
+            const answerCounts = { a: 0, b: 0, c: 0, d: 0 };
+            Object.values(answers).forEach(answer => {
+                answerCounts[answer]++;
+            });
+
+            let resultType;
+            const maxCount = Math.max(...Object.values(answerCounts));
+            
+            if (answerCounts.a === maxCount) resultType = 'golden';
+            else if (answerCounts.b === maxCount) resultType = 'white';
+            else if (answerCounts.c === maxCount) resultType = 'brown';
+            else if (answerCounts.d === maxCount) resultType = 'gray';
+            
+            // Se c'è un pareggio, assegna il criceto panda (raro)
+            const maxAnswers = Object.keys(answerCounts).filter(key => answerCounts[key] === maxCount);
+            if (maxAnswers.length > 1) resultType = 'panda';
+
+            const hamster = hamsterTypes[resultType];
+            
+            document.querySelector('.quiz-content').style.display = 'none';
+            document.getElementById('hamsterImage').className = `hamster-image ${hamster.class}`;
+            document.getElementById('hamsterType').textContent = hamster.name;
+            document.getElementById('hamsterDescription').textContent = hamster.description;
+            document.getElementById('result').classList.add('show');
+
+            // Aggiorna l'URL con il risultato
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.set('result', resultType);
+            window.history.pushState({}, '', newUrl);
+        }
+
+        function shareResult() {
+            const currentUrl = window.location.href;
+            const shareLink = document.getElementById('shareLink');
+            const container = document.getElementById('shareLinkContainer');
+            
+            shareLink.value = currentUrl;
+            container.style.display = 'flex';
+        }
+
+        function copyLink() {
+            const shareLink = document.getElementById('shareLink');
+            const copyBtn = document.querySelector('.copy-btn');
+            
+            shareLink.select();
+            shareLink.setSelectionRange(0, 99999); // Per mobile
+            
+            navigator.clipboard.writeText(shareLink.value).then(() => {
+                copyBtn.textContent = '✅ Copiato!';
+                copyBtn.classList.add('copied');
+                
+                setTimeout(() => {
+                    copyBtn.textContent = '📋 Copia';
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            }).catch(() => {
+                // Fallback per browser più vecchi
+                document.execCommand('copy');
+                copyBtn.textContent = '✅ Copiato!';
+                copyBtn.classList.add('copied');
+                
+                setTimeout(() => {
+                    copyBtn.textContent = '📋 Copia';
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        function checkUrlForResult() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const result = urlParams.get('result');
+            
+            if (result && hamsterTypes[result]) {
+                // Nascondi il quiz e mostra direttamente il risultato
+                document.querySelector('.quiz-content').style.display = 'none';
+                const hamster = hamsterTypes[result];
+                
+                document.getElementById('hamsterImage').className = `hamster-image ${hamster.class}`;
+                document.getElementById('hamsterType').textContent = hamster.name;
+                document.getElementById('hamsterDescription').textContent = hamster.description;
+                document.getElementById('result').classList.add('show');
+                
+                // Mostra anche il link di condivisione
+                const shareLink = document.getElementById('shareLink');
+                const container = document.getElementById('shareLinkContainer');
+                shareLink.value = window.location.href;
+                container.style.display = 'flex';
+            }
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            answers = {};
+            document.getElementById('result').classList.remove('show');
+            document.querySelector('.quiz-content').style.display = 'block';
+            
+            document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+            document.querySelector('[data-question="0"]').classList.add('active');
+            
+            document.querySelectorAll('.answer').forEach(ans => ans.classList.remove('selected'));
+            
+            // Nascondi il container di condivisione
+            document.getElementById('shareLinkContainer').style.display = 'none';
+            
+            // Rimuovi il parametro result dall'URL
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.delete('result');
+            window.history.pushState({}, '', newUrl);
+            
+            updateProgress();
+            updateButtons();
+        }
+
+        // Event listeners per le risposte
+        document.querySelectorAll('.answer').forEach(answer => {
+            answer.addEventListener('click', function() {
+                selectAnswer(this, this.dataset.answer);
+            });
+        });
+
+        // Inizializza la barra di progresso e controlla l'URL
+        updateProgress();
+        checkUrlForResult();
+    </script>
+</body>
+</html>
